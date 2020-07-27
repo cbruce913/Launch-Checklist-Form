@@ -5,15 +5,17 @@ window.addEventListener("load", function(){
    const copilot = document.querySelector("input[name=copilotName]");
    const fuel = document.querySelector("input[name=fuelLevel]");
    const cargo = document.querySelector("input[name=cargoMass]");
+
    const faultyItems = document.getElementById("faultyItems");
    const launchStatus = document.getElementById("launchStatus");
    const pilotStatus = document.getElementById("pilotStatus");
    const copilotStatus = document.getElementById("copilotStatus");
    const fuelStatus = document.getElementById("fuelStatus");
    const cargoStatus = document.getElementById("cargoStatus");
+
    let startFuel = fuelStatus.innerHTML;
    let startCargo = cargoStatus.innerHTML;   
-
+   
    form.addEventListener("submit", function(event){
       if(pilot.value === "" || copilot.value === "" || fuel.value === "" || cargo.value === ""){
          alert("All fields must be completed!")
@@ -24,6 +26,7 @@ window.addEventListener("load", function(){
 
    form.addEventListener("submit", function(_event){
       _event.preventDefault();      
+
       faultyItems.style.visibility = "visible";
       pilotStatus.innerHTML = `Pilot ${pilot.value} is ready for launch.`;
       copilotStatus.innerHTML = `CoPilot ${copilot.value} is ready for launch.`;
@@ -48,28 +51,28 @@ window.addEventListener("load", function(){
          launchStatus.style.color = "black"
       }
    });
-
-   form.addEventListener("submit", function(_event){
-      _event.preventDefault();
-      fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
-         response.json().then(function(json){
-            const planet = json[Math.floor(Math.random()*6)];
-            const div = document.getElementById("missionTarget");
-            div.innerHTML = `
-            <h2>Mission Destination</h2>
-            <ol>
-               <li>Name: ${planet.name}</li>
-               <li>Diameter: ${planet.diameter}</li>
-               <li>Star: ${planet.star}</li>
-               <li>Distance from Earth: ${planet.distance}</li>
-               <li>Number of Moons: ${planet.moons}</li>
-            </ol>
-            <img src="${planet.image}">
-            `
-         })
-      })
-   });
 });
+
+window.addEventListener("load", function(){
+   fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
+      response.json().then(function(json){
+         const planet = json[Math.floor(Math.random()*6)];
+         const div = document.getElementById("missionTarget");
+         div.innerHTML = `
+         <h2>Mission Destination</h2>
+         <ol>
+            <li>Name: ${planet.name}</li>
+            <li>Diameter: ${planet.diameter}</li>
+            <li>Star: ${planet.star}</li>
+            <li>Distance from Earth: ${planet.distance}</li>
+            <li>Number of Moons: ${planet.moons}</li>
+         </ol>
+         <img src="${planet.image}">
+         `
+      })
+   })
+});
+
 
 
 
